@@ -8,7 +8,7 @@ export class Spinner extends Component {
             pageSize: 8,
             category: "general",
       };
-      static defaultProps = {
+      static propTypes = {
             country: PropTypes.string,
             pageSize: PropTypes.number,
             category: PropTypes.string,

@@ -27,7 +27,9 @@ export class News extends Component {
                   }&category=${this.props.category
                   }&apiKey=ad45d68901394d7eab1278d39aa86d71&page=${this.state.page - 1
                   }&pageSize=${this.props.pageSize}`;
-            this.state.loading = true;
+            this.setState({
+                  loading: true
+            })
             let data = await fetch(url);
             let parsedData = await data.json();
             this.setState({
@@ -47,7 +49,9 @@ export class News extends Component {
                         }&category=${this.props.category
                         }&apiKey=ad45d68901394d7eab1278d39aa86d71&page=${this.state.page + 1
                         }&pageSize=${this.props.pageSize}`;
-                  this.state.loading = true;
+                  this.setState({
+                        loading: true
+                  })
                   let data = await fetch(url);
                   let parsedData = await data.json();
                   this.setState({
@@ -86,8 +90,7 @@ export class News extends Component {
                                           type="button"
                                           className="btn btn-dark"
                                           onClick={this.handlePrevClick}
-                                    >
-                                          {" "}
+                                    >                                          
                                           &larr; Previous
                                     </button>
                                     <button
@@ -99,7 +102,7 @@ export class News extends Component {
                                           className="btn btn-dark"
                                           onClick={this.handleNextClick}
                                     >
-                                          Next &rarr;{" "}
+                                          Next &rarr;
                                     </button>
                               </div>
                         </div>
