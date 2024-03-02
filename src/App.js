@@ -6,12 +6,12 @@ import News from "./Components/News";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 export default class App extends Component {
-  pageSize = 15;
+  pageSize = 5;
   render() {
     return (
       <div>
         <Router>
-          <NavBar/>
+          <NavBar />
           <Routes>
             <Route
               path="/"

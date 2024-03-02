@@ -3,15 +3,19 @@ import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
 
 export class News extends Component {
-      constructor() {
-            super();
+      capitalizeFirstLetter = (string) => {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+      }
+      constructor(props) {
+            super(props);
             this.state = {
                   articles: [],
                   loading: false,
                   page: 1,
             };
+            document.title = `${this.capitalizeFirstLetter(this.props.category)} - NewsMonkey`;
       }
-      async updateNews(){
+      async updateNews() {
             const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=ad45d68901394d7eab1278d39aa86d71&page=${this.state.page}&pageSize=${this.props.pageSize}`;
             this.setState({ loading: true });
             let data = await fetch(url);
@@ -41,7 +45,7 @@ export class News extends Component {
             return (
                   <div>
                         <div className="container my-3">
-                              <h1 className="text-center" style={{margin: "2vw 0"}}>NewsMonkey - Top Headlines</h1>
+                              <h1 className="text-center" style={{ margin: "2vw 0" }}>NewsMonkey - Top {this.capitalizeFirstLetter(this.props.category)} Headlines</h1>
                               {this.state.loading && <Spinner />}
                               <div className="row">
                                     {!this.state.loading &&
@@ -69,7 +73,7 @@ export class News extends Component {
                                           type="button"
                                           className="btn btn-dark"
                                           onClick={this.handlePrevClick}
-                                    >                                          
+                                    >
                                           &larr; Previous
                                     </button>
                                     <button
