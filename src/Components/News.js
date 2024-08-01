@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import NewsItem from "./NewsItem";
 import PropTypes from 'prop-types';
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -8,13 +8,13 @@ const News = (props) => {
       const [articles, setArticles] = useState([]);
       const [loading, setLoading] = useState(true);
       const [page, setPage] = useState(1);
-      const [totalResults, setTotalResults] = useState(0);  
+      const [totalResults, setTotalResults] = useState(0);
 
       const capitalizeFirstLetter = (string) => {
             return string.charAt(0).toUpperCase() + string.slice(1);
       };
 
-      const updateNews = async () => {
+      const updateNews = useCallback(async () => {
             props.setProgress(10);
             const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
             setLoading(true);
@@ -26,12 +26,12 @@ const News = (props) => {
             setTotalResults(parsedData.totalResults);
             setLoading(false);
             props.setProgress(100);
-      };
+      }, [props, page]);
 
       useEffect(() => {
-            document.title = `${capitalizeFirstLetter(props.category)} - NewsMonkey`; 
+            document.title = `${capitalizeFirstLetter(props.category)} - NewsMonkey`;
             updateNews();
-      }, []);
+      }, [props.category, updateNews]);
 
       const fetchMoreData = async () => {
             const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page + 1}&pageSize=${props.pageSize}`;
@@ -45,7 +45,7 @@ const News = (props) => {
       return (
             <div>
                   <>
-                        <h1 className="text-center" style={{ margin: "2vw 0", marginTop:"5vw" }}>NewsMonkey - Top {capitalizeFirstLetter(props.category)} Headlines</h1>
+                        <h1 className="text-center" style={{ margin: "2vw 0", marginTop: "5vw" }}>NewsMonkey - Top {capitalizeFirstLetter(props.category)} Headlines</h1>
                         <InfiniteScroll
                               dataLength={articles.length}
                               next={fetchMoreData}
@@ -86,7 +86,9 @@ News.defaultProps = {
 News.propTypes = {
       country: PropTypes.string,
       pageSize: PropTypes.number,
-      category: PropTypes.string
+      category: PropTypes.string,
+      apiKey: PropTypes.string.isRequired,
+      setProgress: PropTypes.func.isRequired
 };
 
 export default News;
