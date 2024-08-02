@@ -19,12 +19,11 @@ const News = (props) => {
             props.setProgress(10);
             const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
             setLoading(true);
-                  try {
-            let data = await fetch(url);
-            if (!data.ok) {
-              throw new Error(`HTTP error! Status: ${data.status}`);
-            }
-                  
+            try {
+                  let data = await fetch(url);
+                  if (!data.ok) {
+                    throw new Error(`HTTP error! Status: ${data.status}`);
+                  }
                   props.setProgress(30);
                   let parsedData = await data.json();
                   props.setProgress(70);
@@ -50,6 +49,9 @@ const News = (props) => {
             setPage(page + 1);
             try {
                   let data = await fetch(url);
+                  if (!data.ok) {
+                    throw new Error(`HTTP error! Status: ${data.status}`);
+                  }
                   let parsedData = await data.json();
                   setArticles((prevArticles) => prevArticles.concat(parsedData.articles || []));
                   setTotalResults(parsedData.totalResults || 0);
