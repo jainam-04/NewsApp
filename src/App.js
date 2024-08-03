@@ -24,7 +24,7 @@ const App = () => {
             element={
               <News
                 apiKey={apiKey}
-                setProgress={setProgress} //
+                setProgress={setProgress} 
                 key="general"
                 pageSize={pageSize}
                 country="in"
