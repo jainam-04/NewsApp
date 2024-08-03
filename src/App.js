@@ -17,7 +17,7 @@ const App = () => {
       <Router>
         <NavBar />
         <LoadingBar color="#f11946" progress={progress} />
-        {/* <Routes>
+        <Routes>
           <Route
             path="/"
             exact
@@ -31,7 +31,7 @@ const App = () => {
                 category="general"
               />
             }
-          ></Route> */}
+          ></Route>
           <Route
             exact
             path="/business"
