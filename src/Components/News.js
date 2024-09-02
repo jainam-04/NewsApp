@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import NewsItem from "./NewsItem";
 import PropTypes from 'prop-types';
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -14,10 +14,10 @@ const News = (props) => {
             return string.charAt(0).toUpperCase() + string.slice(1);
       };
 
-      const updateNews = useCallback(async () => {
+      const updateNews = async () => {
             props.setProgress(10);
             const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
-            setLoading(true);
+                  setLoading(true);
             let data = await fetch(url);
             props.setProgress(30);
             let parsedData = await data.json();
@@ -26,16 +26,16 @@ const News = (props) => {
             setTotalResults(parsedData.totalResults);
             setLoading(false);
             props.setProgress(100);
-      }, [props, page]);
+      };
 
       useEffect(() => {
-            document.title = `${capitalizeFirstLetter(props.category)} - NewsMonkey`;
+            document.title = `${ capitalizeFirstLetter(props.category) } - NewsMonkey`;
             updateNews();
-      }, [props.category, updateNews]);
+      }, []);
 
       const fetchMoreData = async () => {
             const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page + 1}&pageSize=${props.pageSize}`;
-            setPage(page + 1);
+                  setPage(page + 1);
             let data = await fetch(url);
             let parsedData = await data.json();
             setArticles(articles.concat(parsedData.articles));
@@ -86,9 +86,7 @@ News.defaultProps = {
 News.propTypes = {
       country: PropTypes.string,
       pageSize: PropTypes.number,
-      category: PropTypes.string,
-      apiKey: PropTypes.string.isRequired,
-      setProgress: PropTypes.func.isRequired
+      category: PropTypes.string
 };
 
 export default News;
